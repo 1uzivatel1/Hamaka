@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace WebApplication1.Controllers
 {
@@ -26,8 +27,19 @@ namespace WebApplication1.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async void Post([FromBody] string value)
         {
+            const string connectionString = "mongodb://localhost:27017";
+
+            // Create a MongoClient object by using the connection string
+            var client = new MongoClient(connectionString);
+
+            //Use the MongoClient to access the server
+            var database = client.GetDatabase("test");
+
+            //get mongodb collection
+            var collection = database.GetCollection<Entity>("entities");
+            await collection.InsertOneAsync(new Entity { Name = "value" });
         }
 
         // PUT api/values/5
@@ -41,5 +53,10 @@ namespace WebApplication1.Controllers
         public void Delete(int id)
         {
         }
+    }
+
+    internal class Entity
+    {
+        public string Name { get; set; }
     }
 }
