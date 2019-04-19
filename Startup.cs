@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+
 
 namespace WebApplication1
 {
@@ -40,8 +43,12 @@ namespace WebApplication1
                 app.UseHsts();
             }
 
-            app.UseStaticFiles();
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                RequestPath = "/web",
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "web")),
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }
