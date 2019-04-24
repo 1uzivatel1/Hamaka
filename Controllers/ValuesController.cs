@@ -39,7 +39,7 @@ namespace WebApplication1.Controllers
 
             //get mongodb collection
             var collection = database.GetCollection<Entity>("entities");
-            await collection.InsertOneAsync(new Entity { Name = "value" });
+            await collection.InsertOneAsync(new Entity { Name = value });
         }
 
         // PUT api/values/5
