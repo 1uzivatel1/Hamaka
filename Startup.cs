@@ -45,13 +45,8 @@ namespace WebApplication1
             {
                 app.UseHsts();
             }
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                RequestPath = "/web",
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "web")),
-            });
+            app.UseDefaultFiles(); 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
