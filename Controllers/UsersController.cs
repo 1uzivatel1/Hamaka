@@ -15,10 +15,13 @@ namespace Hamaka.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly PassworHashService _passwordHashService;
 
-        public UsersController(UserService userService)
+
+        public UsersController(UserService userService, PassworHashService passwordHashService)
         {
             _userService = userService;
+            _passwordHashService = passwordHashService; 
         }
 
         [HttpGet]

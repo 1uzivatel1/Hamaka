@@ -28,8 +28,9 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //vytvori instanci Userservice pro cely projekt
             //zaregistruje tridu UserService , ktera komunkuje s databazi
+            services.AddSingleton<PassworHashService>();
             services.AddScoped<UserService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
