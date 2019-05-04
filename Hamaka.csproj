@@ -12,11 +12,9 @@
     </EnvironmentVariables>
     <ApplicationURL>http://localhost:5000</ApplicationURL>
   </PropertyGroup>
+
   <ItemGroup>
-    <Compile Remove="wwwroot\**" />
-    <Content Remove="wwwroot\**" />
-    <EmbeddedResource Remove="wwwroot\**" />
-    <None Remove="wwwroot\**" />
+    <Folder Include="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
