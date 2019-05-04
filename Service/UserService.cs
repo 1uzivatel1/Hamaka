@@ -11,14 +11,10 @@ namespace Hamaka.Service
     public class UserService
     {
         private readonly IMongoCollection<User> _users; 
-
-        public UserService(IConfiguration config)
+        public UserService(MongoService mongo)
         {
-            var client = new MongoClient("mongodb://localhost:27017"); // adresa databaze
-            var database = client.GetDatabase("hamaka"); // nazev databaze
-            _users = database.GetCollection<User>("users"); // kolekce uzivatelu v databazi 
+            _users = mongo.db.GetCollection<User>("users"); // kolekce uzivatelu v databazi 
         }
-
 
         public List<User> Get()
         {
@@ -44,6 +40,7 @@ namespace Hamaka.Service
                 .Set(u => u.Name, userIn.Name);
             return _users.UpdateOne<User>( user => user.Id == new ObjectId(id), update);
         }
+
         // 
         //private bool Predicate (User user)
         //{

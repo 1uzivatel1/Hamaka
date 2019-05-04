@@ -32,6 +32,7 @@ namespace WebApplication1
             //zaregistruje tridu UserService , ktera komunkuje s databazi
             services.AddSingleton<PassworHashService>();
             services.AddScoped<UserService>();
+            services.AddSingleton<MongoService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -48,7 +49,6 @@ namespace WebApplication1
             }
             app.UseDefaultFiles(); 
             app.UseStaticFiles();
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
