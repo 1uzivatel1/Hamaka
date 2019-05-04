@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "pika-web",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,6 +14,7 @@
   },
   "dependencies": {
     "htm": "^2.1.1",
-    "preact": "^8.4.2"
+    "preact": "^8.4.2",
+    "preact-router": "^2.6.1"
   }
 }
