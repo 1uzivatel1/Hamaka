@@ -1,4 +1,4 @@
-﻿using System;UserService
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +6,7 @@ using Hamaka.Models;
 using Hamaka.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace Hamaka.Controllers
 {
@@ -30,12 +31,6 @@ namespace Hamaka.Controllers
         public ActionResult<User> Get(string id)
         {
             var user = _userService.Get(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
             return user;
         }
 
@@ -48,31 +43,15 @@ namespace Hamaka.Controllers
         }
 
         [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, User userIn)
+        public ActionResult<UpdateResult> Update(string id, User userIn)
         {
-            var book = _userService.Get(id);
-
-            if (book == null)
-            {
-                return NotFound();
-            }
-
-            _userService.Update(id, userIn);
-
-            return NoContent();
+            return _userService.Update(id, userIn);
         }
 
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
-            var user = _userService.Get(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _userService.Remove(user.Id);
+            _userService.Remove(id);
 
             return NoContent();
         }

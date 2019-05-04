@@ -36,13 +36,13 @@ namespace Hamaka.Service
             return user;
         }
 
-        public void Update(string id, User userIn)
+        public UpdateResult Update(string id, User userIn)
         {
             // _users.ReplaceOne(book => book.Id == id, userIn);
             var update = Builders<User>.Update
                 .Set(u => u.Email, userIn.Email)
                 .Set(u => u.Name, userIn.Name);
-            _users.UpdateOne<User>( user => user.Id == new ObjectId(id), update);
+            return _users.UpdateOne<User>( user => user.Id == new ObjectId(id), update);
         }
         // 
         //private bool Predicate (User user)
