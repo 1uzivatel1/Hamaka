@@ -10,15 +10,18 @@ namespace Hamaka.Models
 {
     public class User
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        // atributy pro Mongo databazy
 
-        [BsonElement("Name")]
+        // bude brat primarni klic,
+        //unikatni identifikator usera
+        [BsonId]
+        public ObjectId Id { get;private set; }
+
+        [BsonElement("Name")]   // nazvy pro databaze
         public string Name { get; set; }
 
         [BsonElement("Email")]
-        public decimal Email { get; set; }
+        public string Email { get; set; }
 
         [BsonElement("Password")]
         public string Password { get; set; }

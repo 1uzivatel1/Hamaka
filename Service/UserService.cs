@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Hamaka.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace Hamaka.Service
 {
     public class UserService
     {
-        private readonly IMongoCollection<User> _users;
+        private readonly IMongoCollection<User> _users; 
 
         public UserService(IConfiguration config)
         {
-            var client = new MongoClient(config.GetConnectionString("mongodb://localhost:27017"));
-            var database = client.GetDatabase("mongodb://localhost:27017");
-            _users = database.GetCollection<User>("users");
+            var client = new MongoClient("mongodb://localhost:27017"); // adresa databaze
+            var database = client.GetDatabase("hamaka"); // nazev databaze
+            _users = database.GetCollection<User>("users"); // kolekce uzivatelu v databazi 
         }
+
 
         public List<User> Get()
         {
@@ -26,7 +27,7 @@ namespace Hamaka.Service
 
         public User Get(string id)
         {
-            return _users.Find<User>(user => user.Id == id).FirstOrDefault();
+            return _users.Find<User>(user => user.Id == new ObjectId(id)).FirstOrDefault();
         }
 
         public User Create(User user)
@@ -35,19 +36,24 @@ namespace Hamaka.Service
             return user;
         }
 
-        public void Update(string id, User userIn)
+        public UpdateResult Update(string id, User userIn)
         {
-            _users.ReplaceOne(book => book.Id == id, userIn);
+            // _users.ReplaceOne(book => book.Id == id, userIn);
+            var update = Builders<User>.Update
+                .Set(u => u.Email, userIn.Email)
+                .Set(u => u.Name, userIn.Name);
+            return _users.UpdateOne<User>( user => user.Id == new ObjectId(id), update);
         }
-
-        public void Remove(User userIn)
-        {
-            _users.DeleteOne(book => book.Id == userIn.Id);
-        }
+        // 
+        //private bool Predicate (User user)
+        //{
+        //    return user.Id == new ObjectId();
+        //}
 
         public void Remove(string id)
         {
-            _users.DeleteOne(user => user.Id == id);
+            _users.DeleteOne(user => user.Id == new ObjectId(id));
         }
+
     }
 }
