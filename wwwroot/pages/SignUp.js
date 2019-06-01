@@ -25,7 +25,7 @@ export class SignUp extends Component {
     }
   }
 
-  render({}, { todos = [] }) {
+  render() {
     return html`
       <section class="sign-up section">
         <div class="container">
